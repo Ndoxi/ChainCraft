@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32b25664baf7fcb408be422fa498fa27, type: 3}
   m_Name: ScriptableObjectsProviderConfig
   m_EditorClassIdentifier: 
-  scriptableObjects: []
+  scriptableObjects:
+  - {fileID: 11400000, guid: 6cebded01129b1b47a3fe0d8350a987c, type: 2}
+  - {fileID: 11400000, guid: d7d5d55acf77c104cac9050470131ad1, type: 2}

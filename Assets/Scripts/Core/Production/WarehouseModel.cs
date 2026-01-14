@@ -7,73 +7,48 @@ namespace ChainCraft.Core.Production
     {
         public event Action<int> updated;
 
-        public readonly ResourceType resourceType;
-
-        private readonly int _capacity;
-        private int _count;
+        public ResourceType resourceType { get; private set; }
+        public int capacity { get; private set; }
+        public int count { get; private set; }
 
         public WarehouseModel(ResourceType resourceType, int capacity)
         {
             this.resourceType = resourceType;
-            _capacity = capacity;
+            this.capacity = capacity;
         }
 
         public void Store()
         {
-            if (_count >= _capacity)
+            if (count >= capacity)
             {
                 Debug.LogError("Warehouse is full!");
                 return;
             }
 
-            _count++;
-            updated?.Invoke(_count);
+            count++;
+            updated?.Invoke(count);
         }
 
-        public void Get()
+        public void Take()
         {
-            if (_count <= 0)
+            if (count <= 0)
             {
                 Debug.LogError("Warehouse is empty!");
                 return;
             }
 
-            _count--;
-            updated?.Invoke(_count);
+            count--;
+            updated?.Invoke(count);
         }
 
         public bool CanStore()
         {
-            return _count < _capacity;
+            return count < capacity;
         }
 
         public bool HasResource()
         {
-            return _count > 0;
-        }
-    }
-
-    public class WarehouseView : MonoBehaviour
-    {
-        [SerializeField] private Transform _pivot;
-        private WarehouseModel _model;
-
-        public void Init(WarehouseModel model)
-        {
-            _model = model;
-
-            _model.updated += OnUpdated;
-        }
-
-        private void OnDestroy()
-        {
-            if (_model != null)
-                _model.updated -= OnUpdated;
-        }
-
-        private void OnUpdated(int count)
-        {
-
+            return count > 0;
         }
     }
 }

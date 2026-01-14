@@ -1,17 +1,20 @@
 using ChainCraft.Data;
 using ChainCraft.Infrastracture;
 using System;
+using UnityEngine;
+using UnityEngine.Windows;
+using UnityEngineInternal;
 
 namespace ChainCraft.Core.Production
 {
     public class ProducerModel : ITickable, IDisposable
     {
-        private readonly Recipe _recipe;
-        private readonly WarehouseModel[] _input;
-        private readonly WarehouseModel _output;
-        private readonly ITicksDispatcher _dispatcher;
-        private ProductionCycle _productionCycle;
+        private WarehouseModel[] _input;
+        private WarehouseModel _output;
 
+        private Recipe _recipe;
+        private ProductionCycle _productionCycle;
+        private ITicksDispatcher _ticksDispatcher;
         private ProducerState _state;
 
         public ProducerModel(Recipe recipe, WarehouseModel[] input, WarehouseModel output)
@@ -20,17 +23,13 @@ namespace ChainCraft.Core.Production
             _input = input;
             _output = output;
 
-            _dispatcher = ServiceLocator.Resolve<ITicksDispatcher>();
-        }
-
-        public void Init()
-        {
             ValidateScheme();
 
             _state = ProducerState.Idle;
             _productionCycle = new ProductionCycle(_recipe.craftDuration);
 
-            _dispatcher.Register(this);
+            _ticksDispatcher = ServiceLocator.Resolve<ITicksDispatcher>();
+            _ticksDispatcher.Register(this);
         }
 
         public void Tick(float delta)
@@ -67,7 +66,7 @@ namespace ChainCraft.Core.Production
 
         public void Dispose()
         {
-            _dispatcher.Unregister(this);
+            _ticksDispatcher.Unregister(this);
         }
 
         private void ValidateScheme()
@@ -101,7 +100,7 @@ namespace ChainCraft.Core.Production
         private void ConsumeInputs()
         {
             foreach (var input in _input)
-                input.Get();
+                input.Take();
         }
     }
 }

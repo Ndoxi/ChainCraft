@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6508846851753888795}
   - component: {fileID: -4422395721122503258}
+  - component: {fileID: 2017507939708013431}
   - component: {fileID: 5873056471132345526}
   - component: {fileID: 1838621635285830301}
   m_Layer: 0
@@ -46,6 +47,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85075c475729634181fc01c55ea003b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2017507939708013431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 442731745659296635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c15daa26f9936b740b86e0febef7898a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5873056471132345526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,6 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _config: {fileID: 11400000, guid: e636832e2d0f3cd44b1abdb46f347ae0, type: 2}
   _ticksDispatcher: {fileID: -4422395721122503258}
+  _animationPlayer: {fileID: 2017507939708013431}
 --- !u!114 &1838621635285830301
 MonoBehaviour:
   m_ObjectHideFlags: 0
