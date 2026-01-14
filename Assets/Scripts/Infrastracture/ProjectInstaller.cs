@@ -1,3 +1,6 @@
+using ChainCraft.Data.Providers;
+using UnityEngine;
+
 namespace ChainCraft.Infrastracture
 {
     public class ProjectInstaller : SceneInstaller
@@ -6,11 +9,13 @@ namespace ChainCraft.Infrastracture
         {
             get 
             {
-                _context ??= new ProjectContext();
+                _context ??= new ProjectContext(_config);
                 return _context;
             }
         }
-        
+
+        [SerializeField] private ScriptableObjectsProviderConfig _config;
+
         private ISceneContext _context;
     }
 }
