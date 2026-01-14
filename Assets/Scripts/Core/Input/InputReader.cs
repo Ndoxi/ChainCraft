@@ -16,7 +16,7 @@ namespace ChainCraft.Core.Input
             _inputChanel = ServiceLocator.Resolve<IInputChanel>();
         }
 
-        void Update()
+        private void Update()
         {
             var input = new Vector2(_virtualJoystick.Horizontal, _virtualJoystick.Vertical);
             _inputChanel.moveInput = input;
