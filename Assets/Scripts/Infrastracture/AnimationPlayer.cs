@@ -11,7 +11,7 @@ namespace ChainCraft.Infrastracture
         {
             public GameObject target;
             public Vector3 start;
-            public Vector3 end;
+            public Func<Vector3> destGetter;
             public float duration;
             public float elapsed;
             public AnimationCurve heightCurve;
@@ -32,7 +32,30 @@ namespace ChainCraft.Infrastracture
             {
                 target = target,
                 start = from,
-                end = to,
+                destGetter = () => to,
+                duration = animParams.duration,
+                heightCurve = animParams.curveY,
+                autoDestroy = autoDestroy,
+                onComplete = onComplete
+            };
+
+            target.transform.position = from;
+
+            _animations.Add(entry);
+        }
+
+        public void PlayHoming(GameObject target,
+                               Vector3 from,
+                               Func<Vector3> destGetter,
+                               AnimationsConfig.Animation animParams,
+                               bool autoDestroy = true,
+                               Action onComplete = null)
+        {
+            var entry = new AnimationEntry
+            {
+                target = target,
+                start = from,
+                destGetter = destGetter,
                 duration = animParams.duration,
                 heightCurve = animParams.curveY,
                 autoDestroy = autoDestroy,
@@ -57,7 +80,7 @@ namespace ChainCraft.Infrastracture
                 entry.elapsed += delta;
                 float t = Mathf.Clamp01(entry.elapsed / entry.duration);
 
-                Vector3 pos = Vector3.Lerp(entry.start, entry.end, t);
+                Vector3 pos = Vector3.Lerp(entry.start, entry.destGetter.Invoke(), t);
                 pos.y += entry.heightCurve?.Evaluate(t) ?? 0f;
 
                 entry.target.transform.position = pos;

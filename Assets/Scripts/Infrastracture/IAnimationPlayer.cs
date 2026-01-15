@@ -12,5 +12,11 @@ namespace ChainCraft.Infrastracture
                   AnimationsConfig.Animation animParams,
                   bool autoDestroy = true,
                   Action onComplete = null);
+        void PlayHoming(GameObject target,
+                  Vector3 from,
+                  Func<Vector3> destGetter,
+                  AnimationsConfig.Animation animParams,
+                  bool autoDestroy = true,
+                  Action onComplete = null);
     }
 }
