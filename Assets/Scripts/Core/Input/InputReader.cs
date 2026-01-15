@@ -19,7 +19,7 @@ namespace ChainCraft.Core.Input
         private void Update()
         {
             var input = new Vector2(_virtualJoystick.Horizontal, _virtualJoystick.Vertical);
-            _inputChanel.moveInput = input;
+            _inputChanel.moveInput = input.normalized;
         }
     }
 }

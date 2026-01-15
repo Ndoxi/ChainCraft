@@ -25,6 +25,7 @@ namespace ChainCraft.Infrastracture
             ServiceLocator.Register<IProvider<ScriptableObject>>(new ScriptableObjectsProvider(_config));
             ServiceLocator.Register(_ticksDispatcher);
             ServiceLocator.Register(_animationPlayer);
+            ServiceLocator.Register<ICameraService>(new CameraService());
         }
 
         public void Uninstall()
@@ -33,6 +34,7 @@ namespace ChainCraft.Infrastracture
             ServiceLocator.Unregister<IProvider<ScriptableObject>>();
             ServiceLocator.Unregister<ITicksDispatcher>();
             ServiceLocator.Unregister<IAnimationPlayer>();
+            ServiceLocator.Unregister<ICameraService>();
         }
     }
 }

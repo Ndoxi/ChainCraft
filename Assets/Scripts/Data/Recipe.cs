@@ -10,5 +10,4 @@ namespace ChainCraft.Data
         public ResourceType output;
         public float craftDuration;
     }
-
 }

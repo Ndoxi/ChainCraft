@@ -9,6 +9,18 @@ namespace ChainCraft.Core.Production
 {
     public class ProducerModel : ITickable, IDisposable
     {
+        public enum ProductionStopReason
+        {
+            None,
+            NoInput,
+            OutputFull
+        }
+
+        public event Action<ProductionStopReason> productionStoped;
+        public event Action productionResumed;
+
+        public float productionProgress => _productionCycle != null ? _productionCycle.progress : 0f;
+
         private WarehouseModel[] _input;
         private WarehouseModel _output;
 
@@ -38,11 +50,17 @@ namespace ChainCraft.Core.Production
             {
                 case ProducerState.Idle:
 
-                    if (CanProduce())
+                    if (CanProduce(out var stopReason))
                     {
                         ConsumeInputs();
                         _productionCycle.Reset();
                         _state = ProducerState.Producing;
+
+                        productionResumed?.Invoke();
+                    }
+                    else
+                    {
+                        productionStoped?.Invoke(stopReason);
                     }
                     break;
 
@@ -55,7 +73,7 @@ namespace ChainCraft.Core.Production
                         _output.Store();
                         _productionCycle.Reset();
 
-                        if (CanProduce())
+                        if (CanProduce(out _))
                             ConsumeInputs();
                         else
                             _state = ProducerState.Idle;
@@ -86,15 +104,25 @@ namespace ChainCraft.Core.Production
                     $"doesn't match recipe {_recipe.output}.");
         }
 
-        private bool CanProduce()
+        private bool CanProduce(out ProductionStopReason stopReason)
         {
             foreach (var input in _input)
             {
                 if (!input.HasResource())
+                {
+                    stopReason = ProductionStopReason.NoInput;
                     return false;
+                }
             }
 
-            return _output.CanStore();
+            if (!_output.CanStore())
+            {
+                stopReason = ProductionStopReason.OutputFull;
+                return false;
+            }
+
+            stopReason = ProductionStopReason.None;
+            return true;
         }
 
         private void ConsumeInputs()

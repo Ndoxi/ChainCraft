@@ -72,7 +72,7 @@ namespace ChainCraft.Core.Production
         private bool TransferAllowed()
         {
             return _output.model.CanStore() 
-                && _output.model.count + _count <= _output.model.capacity;
+                && _output.model.count + _count < _output.model.capacity;
         }
     }
 }

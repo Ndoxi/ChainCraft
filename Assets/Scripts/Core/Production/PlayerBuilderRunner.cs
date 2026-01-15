@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ChainCraft.Core.Production
 {
-    public class MockPlayerBuilderRunner : MonoBehaviour
+    public class PlayerBuilderRunner : MonoBehaviour
     {
         [SerializeField] private int _capacity = 10;
 

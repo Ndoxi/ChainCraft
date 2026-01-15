@@ -13,6 +13,8 @@ namespace ChainCraft.Core.Production
         [SerializeField] private BufferWarehouseBuilder _outputbufferBuilder;
         [Header("Storage")]
         [SerializeField] private WarehouseBuilder _storageWarehouseBuilder;
+        [Header("UI")]
+        [SerializeField] private ProducerUIBuilder _uiBuilder;
 
         private ProducerModel _producer;
 
@@ -30,6 +32,8 @@ namespace ChainCraft.Core.Production
             _outputbufferBuilder.Build(output, storage);
 
             _producer = new ProducerModel(recipe, models, output.model);
+
+            _uiBuilder.Build(_producer);
         }
 
         private void OnDestroy()
