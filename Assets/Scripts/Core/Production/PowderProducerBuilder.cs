@@ -9,7 +9,7 @@ namespace ChainCraft.Core.Production
         [Header("Output")]
         [SerializeField] private WarehouseBuilder _outputWarehouseBuilder;
         [SerializeField] private BufferWarehouseBuilder _outputbufferBuilder;
-        [Header("Stprage")]
+        [Header("Storage")]
         [SerializeField] private WarehouseBuilder _storageWarehouseBuilder;
 
         private ProducerModel _producer;
